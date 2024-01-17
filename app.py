@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -24,7 +24,17 @@ def contact():
 
 @app.route('/thankyou')
 def thankyou():
-    return render_template("thankyou.html")
+    name = request.args.get('username')
+    email = request.args.get('email')
+    address = request.args.get('address')
+    phone = request.args.get('phone')
+    props = {
+        "name": name,
+        "email": email,
+        "address": address,
+        "phone": phone
+    }
+    return render_template("thankyou.html", data=props)
 
 if __name__ == '__main__':
     app.run(debug=True)
